@@ -32,10 +32,11 @@ do
   for i in 1 2 3; 
   do
     response=$(curl -o /dev/null -s -w '%{http_code} %{time_total}' --silent --output /dev/null $url)
+    exit_code=$?
     http_code=$(echo $response | cut -d ' ' -f 1)
     time_total=$(echo $response | cut -d ' ' -f 2)
     echo "    $http_code $time_total"
-    if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 202 ] || [ "$http_code" -eq 301 ] || [ "$http_code" -eq 302 ] || [ "$http_code" -eq 307 ]; then
+    if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 202 ] || [ "$http_code" -eq 301 ] || [ "$http_code" -eq 302 ] || [ "$http_code" -eq 307 ] || [ "$exit_code" -eq 52 ]; then
       result="success"
     else
       result="failed"
@@ -57,9 +58,9 @@ done
 
 if [[ $commit == true ]]
 then
-  git config --global user.name 'fettle-mehatab'
-  git config --global user.email 'fettle.mehatab@gmail.com'
+  git config --global user.name 'The District Of Joban'
+  git config --global user.email 'districtofjoban@gmail.com'
   git add -A --force public/status/
-  git commit -am '[Automated] Update Health Check Logs'
+  git commit -am '[Auto] Updated Status'
   git push
 fi

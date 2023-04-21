@@ -1,6 +1,6 @@
-# Fettle 💟 
+# The District of Joban Status Page
 
-**Fettle** is the open-source status page, powered entirely by GitHub Actions, Issues, and Pages.
+This page is forked from **Fettle**, the open-source status page powered entirely by GitHub Actions, Issues, and Pages.
 
 <img src="./public/ss.png" />
 
