@@ -50,17 +50,17 @@ do
   if [[ $commit == true ]]
   then
     echo $dateTime, $result, $time_total >> "public/status/${key}_report.log"
-    echo "$(tail -2000 public/status/${key}_report.log)" > "public/status/${key}_report.log"
+    echo "$(tail -2000 ./public/status/${key}_report.log)" > "public/status/${key}_report.log"
   else
     echo "    $dateTime, $result, $time_total"
   fi
 done
 
-# if [[ $commit == true ]]
-# then
-#   git config --global user.name 'The District Of Joban'
-#   git config --global user.email 'districtofjoban@gmail.com'
-#   git add -A --force public/status/
-#   git commit -am '[Auto] Updated Status'
-#   git push
-# fi
+if [[ $commit == true ]]
+then
+  git config --global user.name 'The District Of Joban'
+  git config --global user.email 'districtofjoban@gmail.com'
+  git add -A --force public/status/
+  git commit -am '[Auto] Updated Status'
+  git push
+fi
