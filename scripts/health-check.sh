@@ -31,6 +31,7 @@ do
 
   for i in 1 2 3; 
   do
+    curl -L $url
     response=$(curl -o /dev/null -s -L -w '%{http_code} %{time_total}' --silent --output /dev/null $url)
     exit_code=$?
     http_code=$(echo $response | cut -d ' ' -f 1)
