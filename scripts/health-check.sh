@@ -31,7 +31,7 @@ do
 
   for i in 1 2 3; 
   do
-    response=$(curl -o /dev/null -s -w '%{http_code} %{time_total}' --silent --output /dev/null $url)
+    response=$(curl -o /dev/null -s -L -w '%{http_code} %{time_total}' --silent --output /dev/null $url)
     exit_code=$?
     http_code=$(echo $response | cut -d ' ' -f 1)
     time_total=$(echo $response | cut -d ' ' -f 2)
@@ -56,11 +56,11 @@ do
   fi
 done
 
-if [[ $commit == true ]]
-then
-  git config --global user.name 'The District Of Joban'
-  git config --global user.email 'districtofjoban@gmail.com'
-  git add -A --force public/status/
-  git commit -am '[Auto] Updated Status'
-  git push
-fi
+# if [[ $commit == true ]]
+# then
+#   git config --global user.name 'The District Of Joban'
+#   git config --global user.email 'districtofjoban@gmail.com'
+#   git add -A --force public/status/
+#   git commit -am '[Auto] Updated Status'
+#   git push
+# fi
