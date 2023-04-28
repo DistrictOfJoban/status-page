@@ -22,9 +22,9 @@ const IncidentsSection: NextPage = () => {
                         {
                             (monthlyIncidents as MonthlyIncident[]).map(incidents => (
                                 <div className='mb-10' key={incidents.month}>
-                                    <p className='mr-5 text-2xl font-semibold leading-6 text-gray-900'>{incidents.month}</p>
-                                    <div className='mt-2 flex-1 h-px  bg-gray-300' />
-                                    <div className='ml-6 border-l-4'>
+                                    <p className='mr-5 text-2xl font-semibold leading-6 text-gray-900 dark:text-gray-100'>{incidents.month}</p>
+                                    <div className='mt-2 flex-1 h-px  bg-gray-300 dark:bg-gray-600' />
+                                    <div className='ml-6 border-l-4 dark:border-gray-500'>
                                         {
                                             (incidents.incidents as Incidents[]).map(incident => (
                                                 <div className='flex' key={incident.id}>
@@ -34,7 +34,7 @@ const IncidentsSection: NextPage = () => {
                                                         </svg>
                                                     </div>
                                                     <div className='items-center ml-3 mt-6'>
-                                                        <p className='text-base font-semibold leading-6 text-gray-900'>{incident.title}</p>
+                                                        <p className='text-base font-semibold leading-6 text-gray-900 dark:text-gray-100'>{incident.title}</p>
                                                         {
                                                             incident.closed_at != null ? (
                                                                 <>
@@ -43,7 +43,7 @@ const IncidentsSection: NextPage = () => {
                                                                 </>
                                                             )
                                                              : (
-                                                                <p className='text-sm text-gray-500'>This incident is still ongoing.</p>
+                                                                <p className='text-sm text-gray-500 dark:text-gray-400'>This incident is still ongoing.</p>
                                                             )
                                                         }
                                                     </div>

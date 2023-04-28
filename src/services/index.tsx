@@ -39,7 +39,7 @@ const ServicesSection: NextPage = () => {
                 <div className="w-full flex justify-between pt-2 pl-6 pr-6 pb-2">
                     <div className='flex items-center sm:text-xl text-xs font-semibold leading-7'>
                         <Icon />
-                        <p className="ml-3 text-gray-900">{systemStatus?.title}</p>                        
+                        <p className="ml-3 text-gray-900 dark:text-gray-200">{systemStatus?.title}</p>                        
                     </div>
                     <div>
                         <p className="text-xs text-gray-400">Last updated</p>
@@ -63,7 +63,7 @@ const ServicesSection: NextPage = () => {
                         )
                     }
                 </div>
-                <p className="mt-10 sm:text-lg	text-base font-semibold leading-7 text-gray-900">Recent incident</p>
+                <p className="mt-10 sm:text-lg	text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">Recent incident</p>
                 <IncidentsSection />
             </div>
         </div >

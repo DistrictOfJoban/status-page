@@ -4,3 +4,5 @@ export const Status = {
     OUTAGE: "outage",
     UNKNOWN: "unknown"
 }
+
+export const LAST_DAYS = 90

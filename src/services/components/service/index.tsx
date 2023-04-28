@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Status } from '../../../utils/constants';
+import { Status, LAST_DAYS } from '../../../utils/constants';
 import Log from '../../types/Log';
 import LogDaySummary from '../../types/LogDaySummary';
 import Service from "../../types/Service";
@@ -12,7 +12,7 @@ interface ServiceItemProps {
 const ServiceItem: FunctionComponent<ServiceItemProps> = ({ item }) => {
     const Icon = () => {
         if (item?.status === Status.OPERATIONAL) {
-            return <svg className="h-6 w-6 flex-none fill-sky-100 stroke-green-500 stroke-2">
+            return <svg className="h-6 w-6 flex-none fill-sky-100 dark:fill-slate-800 stroke-green-500 stroke-2">
                             <circle cx="12" cy="12" r="11" />
                             <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
                         </svg>
@@ -25,7 +25,7 @@ const ServiceItem: FunctionComponent<ServiceItemProps> = ({ item }) => {
                         <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm0 319.91a20 20 0 1 1 20-20 20 20 0 0 1-20 20zm21.72-201.15-5.74 122a16 16 0 0 1-32 0l-5.74-121.94v-.05a21.74 21.74 0 1 1 43.44 0z"></path>
                     </svg>
         } else {
-            return <svg className="h-6 w-6 flex-none fill-sky-100 stroke-green-500 stroke-2">
+            return <svg className="h-6 w-6 flex-none fill-sky-100 dark:fill-slate-800 stroke-green-500 stroke-2">
                             <circle cx="12" cy="12" r="11" />
                             <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
                         </svg>
@@ -33,8 +33,15 @@ const ServiceItem: FunctionComponent<ServiceItemProps> = ({ item }) => {
     }
 
     const calculateUpTime = () => {
-        let successCount = item.logs.filter((item)=> item.status === Status.OPERATIONAL).length
-        return Math.round((successCount * 100) / 90);
+        let successCount = item.logs.filter((item)=> item.status === Status.OPERATIONAL).length;
+        let partialCount = item.logs.filter((item)=> item.status === Status.PARTIAL_OUTAGE).length;
+        let outageCount = item.logs.filter((item)=> item.status === Status.OUTAGE).length;
+        let unknownCount = item.logs.filter((item)=> item.status === Status.UNKNOWN).length;
+        return Math.round((((successCount) + (partialCount * 0.5)) / (LAST_DAYS - unknownCount)) * 100);
+    }
+    
+    const getKnownDate = () => {
+        return LAST_DAYS - item.logs.filter((item) => item.status === Status.UNKNOWN).length;
     }
 
     return (
@@ -42,8 +49,8 @@ const ServiceItem: FunctionComponent<ServiceItemProps> = ({ item }) => {
             <div className='flex'>
                 <Icon />
                 <div className="w-full flex justify-between items-baseline">
-                    <p className="ml-4 text-base font-semibold leading-6 text-gray-900">{item.name}</p>
-                    <p className='text-xs text-gray-400 items-baseline	self-baseline'> {calculateUpTime()}% operational in last 90 days</p>
+                    <p className="ml-4 text-base font-semibold leading-6 text-gray-900 dark:text-gray-200">{item.name}</p>
+                    <p className='text-xs text-gray-400 items-baseline	self-baseline'> {calculateUpTime()}% operational in last {getKnownDate()} days</p>
                 </div>
 
             </div>
