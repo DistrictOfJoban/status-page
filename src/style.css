@@ -66,3 +66,37 @@
     @apply visible opacity-100 scale-100;
   }
 }
+
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  color-scheme: light dark;
+}
+
+.load-placeholder {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  height: 14rem;
+}
+
+.placeholder-anim {
+  position: absolute;
+  left: -45%;
+  height: 100%;
+  width: 45%;
+  background-image: linear-gradient(to left, rgba(251,251,251, .0), rgba(251,251,251, .025), rgba(251,251,251, .075), rgba(251,251,251, .025), rgba(251,251,251, .0));
+  background-image: -moz-linear-gradient(to left, rgba(251,251,251, .0), rgba(251,251,251, .025), rgba(251,251,251, .075), rgba(251,251,251, .025), rgba(251,251,251, .0));
+  background-image: -webkit-linear-gradient(to left, rgba(251,251,251, .0), rgba(251,251,251, .025), rgba(251,251,251, .075), rgba(251,251,251, .025), rgba(251,251,251, .0));
+  animation: loading 1.2s infinite;
+}
+
+@keyframes loading {
+  0%{
+    left: -45%;
+  }
+  100%{
+    left: 100%;
+  }
+}
