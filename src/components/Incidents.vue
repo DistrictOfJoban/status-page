@@ -56,7 +56,7 @@ export default {
                     <div class="items-center ml-3 mt-6">
                     <p class="text-base font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ incident.title }}</p>
                     <p v-if="incident.state === 'closed'" class="text-sm text-gray-500">This incident has been resolved.</p>
-                    <p v-else class='text-sm text-gray-500 dark:text-gray-400'>This incident is still ongoing.</p>
+                    <p v-else class='text-sm text-gray-900 dark:text-gray-100'>{{ incident.description }}</p>
                     <p v-if="incident.closed_at != null" class="text-sm text-gray-500">{{ dateTimeFormatter.format(new Date(incident.created_at)) }} - {{ dateTimeFormatter.format(new Date(incident.closed_at)) }}</p>
                     <p v-else class="text-sm text-gray-500">Since {{ dateTimeFormatter.format(new Date(incident.created_at)) }}</p>
                     </div>
