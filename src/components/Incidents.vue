@@ -8,7 +8,7 @@ export default {
     data() {
         return {
             allIncidents: null,
-            dateTimeFormatter: new Intl.DateTimeFormat("en-US", {month: "short", day: "numeric", hour: "numeric", minute: "numeric"})
+            dateTimeFormatter: new Intl.DateTimeFormat("en-US", {month: "short", day: "numeric", hour: "numeric", minute: "numeric", hour12: false})
         }
     },
     methods: {
@@ -57,8 +57,8 @@ export default {
                     <p class="text-base font-semibold leading-6 text-gray-900 dark:text-gray-100">{{ incident.title }}</p>
                     <p v-if="incident.state === 'closed'" class="text-sm text-gray-500">This incident has been resolved.</p>
                     <p v-else class='text-sm text-gray-900 dark:text-gray-100'>{{ incident.description }}</p>
-                    <p v-if="incident.closed_at != null" class="text-sm text-gray-500">{{ dateTimeFormatter.format(new Date(incident.created_at)) }} - {{ dateTimeFormatter.format(new Date(incident.closed_at)) }}</p>
-                    <p v-else class="text-sm text-gray-500">Since {{ dateTimeFormatter.format(new Date(incident.created_at)) }}</p>
+                    <p v-if="incident.closed_at != null" class="text-sm text-gray-500">{{ dateTimeFormatter.format(new Date(incident.created_at)) }} - {{ dateTimeFormatter.format(new Date(incident.closed_at)) }} (GMT)</p>
+                    <p v-else class="text-sm text-gray-500">Since {{ dateTimeFormatter.format(new Date(incident.created_at)) }} (GMT)</p>
                     </div>
                 </div>
             </div>
