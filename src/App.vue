@@ -37,15 +37,16 @@ const MAX_UPTIME_HISTORY = 90;
       async fetchUptimeData() {
             const respServices = await fetch("https://raw.githubusercontent.com/DistrictOfJoban/status-page/main/public/urls.cfg");
             const serviceTxt = await respServices.text();
-            const services = [];
+            const promises = [];
             for(let line of serviceTxt.split("\n")) {
                 if(line.length == 0) continue;
 
                 let serviceName = line.split("=")[0];
-                services.push(await this.fetchLog(serviceName));
+                promises.push(this.fetchLog(serviceName));
             }
-            this.services = services;
-            this.allServiceStatus = services.every(e => e.status === 'success') ? ServiceStatus.OPERATIONAL : services.every(e => e.status === 'failed') ? ServiceStatus.OUTAGE : ServiceStatus.PARTIAL_OUTAGE
+
+            this.services = await Promise.all(promises);
+            this.allServiceStatus = this.services.every(e => e.status === 'success') ? ServiceStatus.OPERATIONAL : services.every(e => e.status === 'failed') ? ServiceStatus.OUTAGE : ServiceStatus.PARTIAL_OUTAGE
         },
         async fetchLog(serviceName) {
           const response = await fetch(`https://raw.githubusercontent.com/DistrictOfJoban/status-page/main/public/status/${serviceName}_report.log`);
