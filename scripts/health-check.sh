@@ -7,6 +7,7 @@ fi
 
 KEYSARRAY=()
 URLSARRAY=()
+HISTORY=90
 
 urlsConfig="public/urls.cfg"
 echo "Reading $urlsConfig"
@@ -50,7 +51,7 @@ do
   if [[ $commit == true ]]
   then
     echo $dateTime, $result, $time_total >> "public/status/${key}_report.log"
-    echo "$(tail -2000 ./public/status/${key}_report.log)" > "public/status/${key}_report.log"
+    echo "$(tail -$((HISTORY*24)) ./public/status/${key}_report.log)" > "public/status/${key}_report.log"
   else
     echo "    $dateTime, $result, $time_total"
   fi
