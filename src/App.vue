@@ -45,8 +45,11 @@ const MAX_UPTIME_HISTORY = 90;
                 promises.push(this.fetchLog(serviceName));
             }
 
-            this.services = await Promise.all(promises);
-            this.allServiceStatus = this.services.every(e => e.status === 'success') ? ServiceStatus.OPERATIONAL : services.every(e => e.status === 'failed') ? ServiceStatus.OUTAGE : ServiceStatus.PARTIAL_OUTAGE
+            const services = await Promise.all(promises);
+            const allServiceStatus = services.every(e => e.status === 'success') ? ServiceStatus.OPERATIONAL : services[0].status === "failed" || services.every(e => e.status === 'failed') ? ServiceStatus.OUTAGE : ServiceStatus.PARTIAL_OUTAGE;
+
+            this.services = services;
+            this.allServiceStatus = allServiceStatus;
         },
         async fetchLog(serviceName) {
           const response = await fetch(`https://raw.githubusercontent.com/DistrictOfJoban/status-page/main/public/status/${serviceName}_report.log`);
@@ -87,7 +90,7 @@ const MAX_UPTIME_HISTORY = 90;
               const date = created_at.substr(0, 10);
               let arr = uptime.get(date)?.status ?? [];
               arr.push(status);
-              let summary = arr.every(e => e === 'success') ? ServiceStatus.OPERATIONAL : arr.every(e => e === 'failed') ? ServiceStatus.OUTAGE : ServiceStatus.PARTIAL_OUTAGE
+              let summary = arr.every(e => e === 'success') ? ServiceStatus.OPERATIONAL : arr[arr.length-1] === "failed" || arr.every(e => e === 'failed') ? ServiceStatus.OUTAGE : ServiceStatus.PARTIAL_OUTAGE
               uptime.set(date, { date: date, status: arr, summary: summary });
           }
       
